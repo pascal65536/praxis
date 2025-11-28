@@ -1,0 +1,3 @@
+bcrypt==5.0.0
+libnacl==2.1.0
+pycryptodome==3.23.0
