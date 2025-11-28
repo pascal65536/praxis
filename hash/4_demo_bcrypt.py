@@ -5,10 +5,6 @@ def demonstrate_bcrypt():
     """Демо bcrypt: хеширование и проверка паролей."""
     print("=== ДЕМО: BCRYPT (безопасное хеширование паролей) ===")
     
-    # Словарь для хранения паролей и их хешей
-    password_hashes = {}
-    
-    # === ЧАСТЬ 1: Генерация хешей ===
     print("\n--- Генерация хешей bcrypt ---")
     while True:
         password = input("\nВведите пароль (ENTER - перейти к проверке): ")
@@ -18,16 +14,12 @@ def demonstrate_bcrypt():
         with open(os.path.join("pwds", "custom.txt"), "a", encoding="utf8") as f:
             f.write(f"{password}\n")
         
-        # Создание хеша
         hashed = hash_bcrypt(password)
-        password_hashes[password] = hashed
-        
         print(f"✓ Пароль:      {password}")
         print(f"✓ Хеш bcrypt:  {hashed.decode()}")
         print("  Скопируйте хеш для проверки ниже!")
         print()
     
-    # === ЧАСТЬ 2: Проверка хешей ===
     print("\n=== ПРОВЕРКА ПАРОЛЕЙ ПО ХЕШАМ ===")
     while True:
         print("\n(Введите пароль и хеш для проверки)")
@@ -36,13 +28,10 @@ def demonstrate_bcrypt():
             break
             
         hash_input = input("Вставьте bcrypt хеш: ").strip()
-        
         try:
-            # Проверка пароля
             is_valid = verify_bcrypt(test_password, hash_input.encode())
-            
             if is_valid:
-                print("✓ ПАРОЛЬ СОВПАДАЕТ С ХЕШЕМ!")
+                print(["✓ ПАРОЛЬ СОВПАДАЕТ С ХЕШЕМ!"])
             else:
                 print("✗ Пароль НЕ соответствует хешу")
                 

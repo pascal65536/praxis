@@ -15,12 +15,11 @@ def custom_hash(password):
 
 def demonstrate_custom_hash() -> None:
     print("=== ДЕМО: custom_hash ===")
-
     while True:
         password = input("\nВведите пароль или нажмите ENTER для выхода: ")
         if not password:
             break
-        os.makedirs("pwds", exist_ok=True)       
+        os.makedirs("pwds", exist_ok=True)
         with open(os.path.join("pwds", "custom.txt"), "a", encoding="utf8") as f:
             f.write(f"{password}\n")
         print(f"Пароль:\t{password}")

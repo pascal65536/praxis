@@ -6,7 +6,6 @@ import os
 
 def demonstrate_pynacl_secretbox():
 
-
     print("\n=== РЕШЕНИЕ С PYNACL (libsodium) ===")
 
     key = random(SecretBox.KEY_SIZE)
@@ -16,9 +15,9 @@ def demonstrate_pynacl_secretbox():
         message = input("\nВведите сообщение или нажмите ENTER для перехода ко второй части: ")
         if not message:
             break
-        os.makedirs("pwds", exist_ok=True)        
-        with open(os.path.join('pwds', 'custom.txt'), 'a', encoding='utf8') as f:
-            f.write(f'{message}\n')
+        os.makedirs("pwds", exist_ok=True)
+        with open(os.path.join("pwds", "custom.txt"), "a", encoding="utf8") as f:
+            f.write(f"{message}\n")
 
         encrypted = box.encrypt(message.encode("utf-8"))
         decrypted = box.decrypt(encrypted)
@@ -30,7 +29,9 @@ def demonstrate_pynacl_secretbox():
 
     print("\n=== Проверка расшифровки по Base64: ===")
     while True:
-        encrypted_input = input("\nСкопируйте зашифрованное сообщение (Base64) или ENTER для выхода: ")
+        encrypted_input = input(
+            "\nВставьте зашифрованное сообщение (Base64) или нажмите ENTER для выхода: "
+        )
         if not encrypted_input:
             break
         try:
@@ -39,7 +40,6 @@ def demonstrate_pynacl_secretbox():
             print("Расшифрованное сообщение:", decrypted_bytes.decode("utf-8"))
         except Exception as e:
             print("Ошибка расшифровки:", e)
-
 
 
 if __name__ == "__main__":
