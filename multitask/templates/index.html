@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="last-updated">
+    Last updated: {{ now.strftime('%Y-%m-%d %H:%M:%S') }}
+</div>
+
+<!-- Статистика -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>{{ workers_info|length }}</h3>
+        <p>Total Workers</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ workers_info.values()|selectattr('is_active')|list|length }}</h3>
+        <p>Active Workers</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ workers_info.values()|sum(attribute='completed_tasks') }}</h3>
+        <p>Completed Tasks</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ workers_info.values()|sum(attribute='pending_tasks') }}</h3>
+        <p>Pending Tasks</p>
+    </div>
+</div>
+
+<!-- Таблица воркеров -->
+<h2 style="margin-bottom: 20px; color: #2c3e50;">Worker Status</h2>
+<table class="workers-table">
+    <thead>
+        <tr>
+            <th>Worker ID</th>
+            <th>Status</th>
+            <th>Completed Tasks</th>
+            <th>Pending Tasks</th>
+            <th>Current Task</th>
+            <th>Last Activity</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for worker_id, info in workers_info.items() %}
+        <tr>
+            <td><strong>{{ worker_id }}</strong></td>
+            <td>
+                {% if info.is_active %}
+                    <span class="status-active">🟢 Active</span>
+                {% else %}
+                    <span class="status-inactive">🔴 Inactive</span>
+                {% endif %}
+            </td>
+            <td>{{ info.completed_tasks }}</td>
+            <td>{{ info.pending_tasks }}</td>
+            <td>
+                {% if info.current_task %}
+                    <div class="task-numbers">
+                        {{ info.current_task.numbers }}
+                    </div>
+                    <small>Hash: {{ info.current_task.task_hash }}</small>
+                {% else %}
+                    <em>No active task</em>
+                {% endif %}
+            </td>
+            <td>
+                {% if info.last_activity %}
+                    {{ info.last_activity.strftime('%H:%M:%S') }}
+                {% else %}
+                    <em>Never</em>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ url_for('worker_details', client_id=worker_id) }}" class="btn">
+                    View Details
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="7" style="text-align: center; padding: 40px;">
+                <h3>No workers active</h3>
+                <p>Start some worker clients to see them here</p>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

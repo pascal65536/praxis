@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Для дополнительной поддержки разных форматов -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+
+    <title>{% block title %}Experiments{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <div class="logo">Experiments</div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Главная</a></li>
+                <li><a href="{{ url_for('pictures') }}">Галерея</a></li>
+                <li><a href="{{ url_for('gena') }}">Генератор</a></li>
+                <li><a href="{{ url_for('weather1') }}">Погода 1</a></li>
+                <li><a href="{{ url_for('weather2') }}">Погода 2</a></li>
+                <li><a href="{{ url_for('weather3') }}">Погода 3</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+
+            <!-- Flash сообщения -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="flash-message flash-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Experiments</p>
+        </div>
+    </footer>
+
+    {% if config.DEBUG %}
+    <div class="debug-status">Debug: ON</div>
+    {% else %}
+    <div class="debug-status off">Debug: OFF</div>
+    {% endif %}
+
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Worker {{ client_id }} - Details{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('index') }}" class="btn" style="margin-bottom: 20px;">← Back to Overview</a>
+
+<h1 style="color: #2c3e50; margin-bottom: 30px;">Worker: {{ client_id }}</h1>
+
+<!-- Статистика воркера -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>{{ total_tasks }}</h3>
+        <p>Total Tasks</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ completed_tasks }}</h3>
+        <p>Completed</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ pending_tasks }}</h3>
+        <p>Pending</p>
+    </div>
+    <div class="stat-card">
+        <h3>
+            {% if last_activity %}
+                {{ last_activity.strftime('%H:%M') }}
+            {% else %}
+                Never
+            {% endif %}
+        </h3>
+        <p>Last Activity</p>
+    </div>
+</div>
+
+<!-- История задач -->
+<h2 style="margin: 30px 0 20px 0; color: #2c3e50;">Task History</h2>
+<table class="workers-table">
+    <thead>
+        <tr>
+            <th>Time</th>
+            <th>Task Numbers</th>
+            <th>Status</th>
+            <th>Task Hash</th>
+            <th>Result</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in entries|reverse %}
+        <tr>
+            <td>
+                {{ entry.timestamp[:19] }}
+            </td>
+            <td>
+                <div class="task-numbers">
+                    {{ entry.numbers }}
+                </div>
+            </td>
+            <td>
+                {% if entry.completed %}
+                    <span class="status-active">✅ Completed</span>
+                {% else %}
+                    <span class="status-inactive">⏳ Pending</span>
+                {% endif %}
+            </td>
+            <td>
+                <small>{{ entry.task_hash[:20] }}...</small>
+            </td>
+            <td>
+                {% if entry.completed %}
+                    <div class="task-numbers">
+                        {{ entry.sorted_numbers }}
+                    </div>
+                {% else %}
+                    <em>In progress...</em>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5" style="text-align: center; padding: 40px;">
+                <h3>No tasks found</h3>
+                <p>This worker hasn't received any tasks yet</p>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
