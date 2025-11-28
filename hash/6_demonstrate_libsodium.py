@@ -16,6 +16,7 @@ def demonstrate_pynacl_secretbox():
         message = input("\nВведите сообщение или нажмите ENTER для перехода ко второй части: ")
         if not message:
             break
+        os.makedirs("pwds", exist_ok=True)        
         with open(os.path.join('pwds', 'custom.txt'), 'a', encoding='utf8') as f:
             f.write(f'{message}\n')
 

@@ -28,7 +28,7 @@ def demonstrate_werkzeug_password_hash():
         hash_check = input("Вставьте хеш для сравнения: ")
         
         # Проверка пароля
-        valid = check_password_hash(hash_check, password_check)
+        is_valid = check_password_hash(hash_check, password_check)
         
         if is_valid:
             print("✓ ПАРОЛЬ СОВПАДАЕТ С ХЕШЕМ!")

@@ -14,8 +14,6 @@ def demonstrate_bcrypt():
         password = input("\nВведите пароль (ENTER - перейти к проверке): ")
         if not password:
             break
-            
-        # Сохранение в файл
         os.makedirs("pwds", exist_ok=True)
         with open(os.path.join("pwds", "custom.txt"), "a", encoding="utf8") as f:
             f.write(f"{password}\n")
