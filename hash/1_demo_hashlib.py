@@ -18,7 +18,7 @@ def hash_sha512(password):
 
 
 def demonstrate_hashlib() -> None:
-    print("=== ДЕМО: hashlib (MD5, SHA-1) ===")
+    print("=== ДЕМО: hashlib (MD5, SHA-1, SHA-512) ===")
 
     while True:
         password = input('\nВведите пароль или нажмите ENTER для выхода: ')
