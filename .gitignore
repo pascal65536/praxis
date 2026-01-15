@@ -1,4 +1,5 @@
 .venv/
+.vscode/
 hash/pwds/
 hash/pwds/custom.txt
 hash/pwds/keyboard_walk.txt
